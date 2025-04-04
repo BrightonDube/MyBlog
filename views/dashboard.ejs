@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Dashboard</title>
-  </head>
-  <body>
-    <h1>Dashboard</h1>
-    <p>Welcome <%= user.displayName %></p>
-    <a href="/auth/logout">Logout</a>
-  </body>
-</html>
+<% layout('layout', { title: 'Dashboard' }) %>
+<section class="container">
+  <h1>Dashboard</h1>
+  <p>Welcome back, <%= user.displayName %>!</p>
+  <p>Email: <%= user.email %></p>
+</section>

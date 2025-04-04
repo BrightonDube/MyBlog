@@ -9,6 +9,7 @@ const connectDB = require('./config/db');
 const passportConfig = require('./config/passport');
 const { swaggerUi, swaggerSpec } = require('./swagger/swagger');
 const errorHandler = require('./middlewares/errorHandler');
+const expressLayouts = require('express-ejs-layouts');
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // EJS
+app.use(expressLayouts);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));

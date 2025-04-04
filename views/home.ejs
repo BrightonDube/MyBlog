@@ -1,19 +1,9 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>Home</title>
-</head>
-
-<body>
-    <h1>Welcome to the App</h1>
-    <% if (!user) { %>
-        <a href="/auth/google">Login with Google</a>
-        <% } else { %>
-            <p>Hello, <%= user.displayName %>!</p>
-            <a href="/dashboard">Go to Dashboard</a>
-            <a href="/auth/logout">Logout</a>
-            <% } %>
-</body>
-
-</html>
+<% layout('layout', { title: 'Home' }) %>
+<section class="container">
+  <h1>Welcome to the Node App</h1>
+  <% if (!user) { %>
+    <p>Please <a href="/auth/google">login with Google</a> to continue.</p>
+  <% } else { %>
+    <p>Hello, <%= user.displayName %>! Go to your <a href="/dashboard">dashboard</a>.</p>
+  <% } %>
+</section>
