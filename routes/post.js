@@ -8,6 +8,46 @@ const postSchema = Joi.object({
   title: Joi.string().required(),
   content: Joi.string().required(),
 });
+/**
+ * @swagger
+ * /post:
+ *   get:
+ *     summary: Get all posts
+ *     tags: [Post]
+ *     security:
+ *       - cookieAuth: []
+ *     responses:
+ *       200:
+ *         description: List of posts
+ *
+ *   post:
+ *     summary: Create a post
+ *     tags: [Post]
+ *     security:
+ *       - cookieAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - title
+ *               - content
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 example: My First Blog
+ *               content:
+ *                 type: string
+ *                 example: This is a post about how to build a Node.js app.
+ *     responses:
+ *       201:
+ *         description: Post created successfully
+ *       400:
+ *         description: Validation failed
+ */
+
 
 /**
  * @swagger
