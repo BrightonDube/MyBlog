@@ -1,10 +1,13 @@
-const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
+const swaggerJSDoc = require('swagger-jsdoc');
 
 const options = {
   definition: {
     openapi: '3.0.0',
-    info: { title: 'NodeJS App API', version: '1.0.0' },
+    info: {
+      title: 'Node.js API with Express & MongoDB',
+      version: '1.0.0',
+    },
     components: {
       securitySchemes: {
         cookieAuth: {
@@ -19,9 +22,10 @@ const options = {
   apis: ['./routes/*.js'],
 };
 
-const swaggerSpec = swaggerJsdoc(options);
+const swaggerSpec = swaggerJSDoc(options);
 
 module.exports = {
   swaggerUi,
   swaggerSpec,
+  options,
 };
