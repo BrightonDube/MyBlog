@@ -11,6 +11,42 @@
         "in": "cookie",
         "name": "connect.sid"
       }
+    },
+    "schemas": {
+      "Post": {
+        "type": "object",
+        "required": [
+          "title",
+          "content"
+        ],
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "My First Post"
+          },
+          "content": {
+            "type": "string",
+            "example": "This is the content of my first blog post."
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "605c5d5e3f1f1b23dc7e4b8a"
+          },
+          "displayName": {
+            "type": "string",
+            "example": "John Doe"
+          },
+          "email": {
+            "type": "string",
+            "example": "john@example.com"
+          }
+        }
+      }
     }
   },
   "security": [
@@ -22,45 +58,179 @@
     "/auth/google": {
       "get": {
         "summary": "Google OAuth login",
-        "tags": ["Auth"]
+        "tags": [
+          "Auth"
+        ]
       }
     },
     "/auth/google/callback": {
       "get": {
         "summary": "Google OAuth callback",
-        "tags": ["Auth"]
+        "tags": [
+          "Auth"
+        ]
       }
     },
     "/post": {
       "get": {
         "summary": "Get all posts",
-        "tags": ["Post"]
+        "tags": [
+          "Post"
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of posts"
+          }
+        }
       },
       "post": {
-        "summary": "Create a post",
-        "tags": ["Post"]
+        "summary": "Create a new post",
+        "tags": [
+          "Post"
+        ],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Post created successfully"
+          }
+        }
       }
     },
     "/post/{id}": {
       "put": {
         "summary": "Update a post",
-        "tags": ["Post"]
+        "tags": [
+          "Post"
+        ],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Post ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Post updated successfully"
+          }
+        }
       },
       "delete": {
         "summary": "Delete a post",
-        "tags": ["Post"]
+        "tags": [
+          "Post"
+        ],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Post ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Post deleted successfully"
+          }
+        }
       }
     },
     "/user": {
       "get": {
         "summary": "Get all users",
-        "tags": ["User"]
+        "tags": [
+          "User"
+        ],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of users",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/user/{id}": {
       "delete": {
         "summary": "Delete a user",
-        "tags": ["User"]
+        "tags": [
+          "User"
+        ],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "User ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User deleted successfully"
+          }
+        }
       }
     }
   },
