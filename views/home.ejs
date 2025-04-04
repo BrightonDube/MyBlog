@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Home</title>
+</head>
+
+<body>
+    <h1>Welcome to the App</h1>
+    <% if (!user) { %>
+        <a href="/auth/google">Login with Google</a>
+        <% } else { %>
+            <p>Hello, <%= user.displayName %>!</p>
+            <a href="/dashboard">Go to Dashboard</a>
+            <a href="/auth/logout">Logout</a>
+            <% } %>
+</body>
+
+</html>
