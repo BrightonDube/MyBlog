@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const Post = require('../models/Post');
 const validatePost = require('../middlewares/validatePost');
-const { ensureAuth } = require('../middlewares/authMiddleware');
+const { ensureAuth } = require('../middlewares/auth');
 
 /**
  * @swagger
