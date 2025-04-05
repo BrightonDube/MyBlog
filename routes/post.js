@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const Post = require('../models/Post');
-const validatePost = require('../middlewares/validatePost');
+const validatePost = require('../middlewares/validate');
 const { ensureAuth } = require('../middlewares/auth');
 
 /**
@@ -29,7 +29,8 @@ const { ensureAuth } = require('../middlewares/auth');
  *       201:
  *         description: Post created successfully
  */
-router.route('/')
+router
+  .route('/')
   .get(async (req, res, next) => {
     try {
       const posts = await Post.find();
@@ -87,10 +88,15 @@ router.route('/')
  *       200:
  *         description: Post deleted successfully
  */
-router.route('/:id')
+router
+  .route('/:id')
   .put(ensureAuth, validatePost, async (req, res, next) => {
     try {
-      const updatedPost = await Post.findByIdAndUpdate(req.params.id, req.body, { new: true });
+      const updatedPost = await Post.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        { new: true }
+      );
       res.json(updatedPost);
     } catch (err) {
       next(err);
