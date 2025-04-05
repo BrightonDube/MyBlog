@@ -1,8 +1,9 @@
 <% layout='layout' %>
     <% title='Dashboard' %>
         <section class="container">
-            <h1>Dashboard</h1>
-            <p>Welcome back, <%= user.displayName %>!</p>
+            <h1>Your Dashboard</h1>
+            <p>Welcome, <%= user.displayName %>!</p>
             <p>Email: <%= user.email %>
             </p>
+            <a class="btn" href="/api-docs" target="_blank">View API Docs</a>
         </section>

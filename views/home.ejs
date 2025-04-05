@@ -1,10 +1,11 @@
-<% layout = 'layout' %>
-<% title = 'Home' %>
-<section class="container">
-  <h1>Welcome to the Node App</h1>
-  <% if (!user) { %>
-    <p>Please <a href="/auth/google">login with Google</a> to continue.</p>
-  <% } else { %>
-    <p>Hello, <%= user.displayName %>! Go to your <a href="/dashboard">dashboard</a>.</p>
-  <% } %>
-</section>
+<% layout='layout' %>
+  <% title='Home' %>
+    <section class="container">
+      <h1>Welcome to the Node App</h1>
+      <% if (!user) { %>
+        <p>Please <a href="/auth/google">login with Google</a> to continue.</p>
+        <% } else { %>
+          <p>Hello, <%= user.displayName %>! Go to your <a href="/dashboard">dashboard</a>.</p>
+          <% } %>
+            <a class="btn" href="/api-docs" target="_blank">View API Docs</a>
+    </section>
