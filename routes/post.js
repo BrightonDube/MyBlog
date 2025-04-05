@@ -39,7 +39,7 @@ router
       next(err);
     }
   })
-  .post(/*ensureAuth, validatePost*/, async (req, res, next) => {
+  .post(/*ensureAuth, validatePost,*/ async (req, res, next) => {
     try {
       const newPost = await Post.create(req.body);
       res.status(201).json(newPost);
