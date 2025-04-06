@@ -144,6 +144,51 @@
             "example": "https://updated-website.com (optional)"
           }
         }
+      },
+      "ValidationErrorResponse": {  // New schema for validation errors
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Validation error"
+          },
+          "errors": {
+            "type": "object",
+            "additionalProperties": { // Allows for dynamic error fields based on validation failures
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Path `title` is required."
+                },
+                "kind": {
+                  "type": "string",
+                  "example": "required"
+                },
+                "path": {
+                  "type": "string",
+                  "example": "title"
+                },
+                "value": {
+                  "type": "string",
+                  "nullable": true,
+                  "example": null
+                }
+              }
+            }
+          }
+        },
+        "example": {  // Example of a ValidationErrorResponse
+          "message": "Validation error",
+          "errors": {
+            "title": {
+              "message": "Path `title` is required.",
+              "kind": "required",
+              "path": "title",
+              "value": null
+            }
+          }
+        }
       }
     }
   },
@@ -204,6 +249,27 @@
         "responses": {
           "201": {
             "description": "Post created successfully"
+          },
+          "400": { // Added 400 response for validation errors
+            "description": "Validation error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationErrorResponse" // Reference ValidationErrorResponse schema
+                },
+                "example": { // Example of a validation error response in Swagger UI
+                  "message": "Validation error",
+                  "errors": {
+                    "title": {
+                      "message": "Path `title` is required.",
+                      "kind": "required",
+                      "path": "title",
+                      "value": null
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       }
