@@ -37,6 +37,11 @@
             "type": "string",
             "example": "605c5d5e3f1f1b23dc7e4b8a"
           },
+          "googleId": {
+            "type": "string",
+            "example": "1234567890",
+            "description": "Google ID (if Google OAuth is used)"
+          },
           "displayName": {
             "type": "string",
             "example": "John Doe"
@@ -44,6 +49,99 @@
           "email": {
             "type": "string",
             "example": "john@example.com"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "User creation timestamp"
+          },
+          "profilePicture": {
+            "type": "string",
+            "example": "URL_to_profile_picture",
+            "description": "URL to user's profile picture"
+          },
+          "bio": {
+            "type": "string",
+            "example": "A short biography about the user."
+          },
+          "location": {
+            "type": "string",
+            "example": "New York, USA"
+          },
+          "website": {
+            "type": "string",
+            "example": "https://www.example.com"
+          }
+        }
+      },
+      "NewUserPayload": {
+        "type": "object",
+        "required": [
+          "email",
+          "password",
+          "displayName"
+        ],
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "newuser@example.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "securePassword123"
+          },
+          "displayName": {
+            "type": "string",
+            "example": "New User Display Name"
+          },
+          "profilePicture": {
+            "type": "string",
+            "example": "URL_to_profile_picture",
+            "description": "URL to user's profile picture (optional)"
+          },
+          "bio": {
+            "type": "string",
+            "example": "A short biography about the user. (optional)"
+          },
+          "location": {
+            "type": "string",
+            "example": "New York, USA (optional)"
+          },
+          "website": {
+            "type": "string",
+            "example": "https://www.example.com (optional)"
+          }
+        }
+      },
+      "UpdateUserPayload": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "updateduser@example.com"
+          },
+          "displayName": {
+            "type": "string",
+            "example": "Updated User Display Name"
+          },
+          "profilePicture": {
+            "type": "string",
+            "example": "URL_to_new_profile_picture",
+            "description": "URL to user's profile picture (optional)"
+          },
+          "bio": {
+            "type": "string",
+            "example": "Updated biography. (optional)"
+          },
+          "location": {
+            "type": "string",
+            "example": "London, UK (optional)"
+          },
+          "website": {
+            "type": "string",
+            "example": "https://updated-website.com (optional)"
           }
         }
       }
@@ -200,11 +298,141 @@
                 }
               }
             }
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new user",
+        "tags": [
+          "User"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewUserPayload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error or bad request"
+          },
+          "500": {
+            "description": "Server error"
           }
         }
       }
     },
     "/user/{id}": {
+      "get": {
+        "summary": "Get a user by ID",
+        "tags": [
+          "User"
+        ],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "User ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User details",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a user by ID",
+        "tags": [
+          "User"
+        ],
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "User ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserPayload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation error or bad request"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Server error"
+          }
+        }
+      },
       "delete": {
         "summary": "Delete a user",
         "tags": [
@@ -229,10 +457,29 @@
         "responses": {
           "200": {
             "description": "User deleted successfully"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Server error"
           }
         }
       }
     }
   },
-  "tags": []
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Authentication related operations"
+    },
+    {
+      "name": "Post",
+      "description": "Operations related to blog posts"
+    },
+    {
+      "name": "User",
+      "description": "User management"
+    }
+  ]
 }
